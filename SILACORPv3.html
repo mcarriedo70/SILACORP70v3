@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Organización SILACORP - Cursos de Brigadas de Emergencia</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <style>
+        /* Estilos personalizados */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f7f7f7; /* Fondo gris claro */
+            color: #333;
+        }
+        .header-bg {
+            background-color: #dc2626; /* Rojo de Tailwind 600 */
+        }
+        .text-silacorp-red {
+            color: #dc2626; /* Rojo de Tailwind 600 */
+        }
+        .btn-primary {
+            background-color: #dc2626; /* Rojo de Tailwind 600 */
+            color: white;
+            transition: background-color 0.3s ease;
+        }
+        .btn-primary:hover {
+            background-color: #ef4444; /* Rojo de Tailwind 500 */
+        }
+        .form-input, .form-select, .form-textarea {
+            border: 1px solid #d1d5db; /* Gris de Tailwind 300 */
+            border-radius: 0.5rem; /* rounded-lg */
+            padding: 0.75rem 1rem;
+            width: 100%;
+            box-sizing: border-box; /* Asegura que padding no aumente el ancho */
+        }
+        .form-input:focus, .form-select:focus, .form-textarea:focus {
+            outline: none;
+            border-color: #dc2626; /* Rojo de Tailwind 600 */
+            box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.3); /* Sombra de enfoque roja */
+        }
+        .success-message {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #22c55e; /* Verde de Tailwind 500 */
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            display: none; /* Oculto por defecto */
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body class="antialiased">
+    <header class="header-bg text-white py-6 shadow-lg">
+        <div class="container mx-auto flex flex-col md:flex-row items-center justify-between px-4">
+            <div class="flex items-center mb-4 md:mb-0">
+                <img src="https://placehold.co/100x100/ffffff/dc2626?text=SILACORP" alt="Logo SILACORP" class="h-24 w-24 rounded-full mr-4 shadow-md">
+                <h1 class="text-5xl font-extrabold tracking-tight">SILACORP</h1>
+            </div>
+            <nav>
+                <ul class="flex space-x-6 text-lg font-semibold">
+                    <li><a href="#about" class="hover:text-gray-200 transition-colors">Nosotros</a></li>
+                    <li><a href="#courses" class="hover:text-gray-200 transition-colors">Cursos</a></li>
+                    <li><a href="#contact" class="hover:text-gray-200 transition-colors">Contacto</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container mx-auto my-10 p-4">
+        <section id="about" class="bg-white p-8 rounded-xl shadow-lg mb-10">
+            <h2 class="text-4xl font-bold text-silacorp-red mb-6 text-center">Organización SILACORP</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div>
+                    <h3 class="text-2xl font-semibold mb-3">Misión</h3>
+                    <p class="text-gray-700 leading-relaxed">Capacitar y formar brigadas de emergencia altamente competentes, promoviendo una cultura de prevención y respuesta eficaz ante cualquier contingencia, salvaguardando vidas y bienes.</p>
+                </div>
+                <div>
+                    <h3 class="text-2xl font-semibold mb-3">Visión</h3>
+                    <p class="text-gray-700 leading-relaxed">Ser la organización líder en capacitación de brigadas de emergencia a nivel nacional, reconocida por nuestra excelencia, innovación y el impacto positivo en la seguridad de las comunidades y empresas.</p>
+                </div>
+                <div>
+                    <h3 class="text-2xl font-semibold mb-3">Valores</h3>
+                    <ul class="list-disc list-inside text-gray-700 leading-relaxed">
+                        <li><span class="font-medium">Compromiso:</span> Con la seguridad y el bienestar de nuestros clientes.</li>
+                        <li><span class="font-medium">Excelencia:</span> En la calidad de nuestra capacitación y servicios.</li>
+                        <li><span class="font-medium">Integridad:</span> Actuando con ética y transparencia en todo momento.</li>
+                        <li><span class="font-medium">Innovación:</span> Adaptándonos a las nuevas tecnologías y metodologías.</li>
+                        <li><span class="font-medium">Trabajo en Equipo:</span> Fomentando la colaboración y el apoyo mutuo.</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-2xl font-semibold mb-3">Objetivo del Curso</h3>
+                    <p class="text-gray-700 leading-relaxed">Proporcionar a los participantes los conocimientos teóricos y prácticos necesarios para actuar de manera organizada y eficiente en situaciones de emergencia, minimizando riesgos y salvaguardando la integridad de las personas.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="courses" class="bg-white p-8 rounded-xl shadow-lg">
+            <h2 class="text-4xl font-bold text-silacorp-red mb-8 text-center">Inscripción a Cursos de Emergencia</h2>
+
+            <form id="registrationForm" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    <label for="nombre" class="block text-gray-700 text-sm font-bold mb-2">Nombre Completo:</label>
+                    <input type="text" id="nombre" name="nombre" class="form-input" placeholder="Tu Nombre Completo" required>
+                </div>
+
+                <div>
+                    <label for="fechaNacimiento" class="block text-gray-700 text-sm font-bold mb-2">Fecha de Nacimiento:</label>
+                    <input type="date" id="fechaNacimiento" name="fechaNacimiento" class="form-input" required>
+                </div>
+
+                <div>
+                    <label for="curso" class="block text-gray-700 text-sm font-bold mb-2">Selecciona el Curso:</label>
+                    <select id="curso" name="curso" class="form-select" required>
+                        <option value="">-- Selecciona un Curso --</option>
+                        <option value="Brigada de Emergencias">Brigada de Emergencias</option>
+                        <option value="Primeros Auxilios">Primeros Auxilios</option>
+                        <option value="Combate Contra Incendios">Combate Contra Incendios</option>
+                        <option value="Combate de Plagas">Combate de Plagas</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label for="modalidad" class="block text-gray-700 text-sm font-bold mb-2">Modalidad del Curso:</label>
+                    <select id="modalidad" name="modalidad" class="form-select" required>
+                        <option value="">-- Selecciona una Modalidad --</option>
+                        <option value="Presencial">Presencial</option>
+                        <option value="Virtual">Virtual</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label for="telefono" class="block text-gray-700 text-sm font-bold mb-2">Teléfono (10 dígitos):</label>
+                    <input type="tel" id="telefono" name="telefono" class="form-input" placeholder="Ej. 5512345678" maxlength="10" pattern="[0-9]{10}" title="Por favor, ingresa 10 dígitos numéricos" required>
+                </div>
+
+                <div>
+                    <label for="email" class="block text-gray-700 text-sm font-bold mb-2">E-mail:</label>
+                    <input type="email" id="email" name="email" class="form-input" placeholder="tu.email@ejemplo.com" required>
+                </div>
+
+                <div>
+                    <label for="ciudad" class="block text-gray-700 text-sm font-bold mb-2">Ciudad:</label>
+                    <input type="text" id="ciudad" name="ciudad" class="form-input" placeholder="Tu Ciudad" required>
+                </div>
+
+                <div>
+                    <label for="estado" class="block text-gray-700 text-sm font-bold mb-2">Estado:</label>
+                    <select id="estado" name="estado" class="form-select" required>
+                        <option value="">-- Selecciona un Estado --</option>
+                        <option value="Aguascalientes">Aguascalientes</option>
+                        <option value="Baja California">Baja California</option>
+                        <option value="Baja California Sur">Baja California Sur</option>
+                        <option value="Campeche">Campeche</option>
+                        <option value="Chiapas">Chiapas</option>
+                        <option value="Chihuahua">Chihuahua</option>
+                        <option value="Coahuila de Zaragoza">Coahuila de Zaragoza</option>
+                        <option value="Colima">Colima</option>
+                        <option value="Ciudad de México">Ciudad de México</option>
+                        <option value="Durango">Durango</option>
+                        <option value="Guanajuato">Guanajuato</option>
+                        <option value="Guerrero">Guerrero</option>
+                        <option value="Hidalgo">Hidalgo</option>
+                        <option value="Jalisco">Jalisco</option>
+                        <option value="México">México</option>
+                        <option value="Michoacán de Ocampo">Michoacán de Ocampo</option>
+                        <option value="Morelos">Morelos</option>
+                        <option value="Nayarit">Nayarit</option>
+                        <option value="Nuevo León">Nuevo León</option>
+                        <option value="Oaxaca">Oaxaca</option>
+                        <option value="Puebla">Puebla</option>
+                        <option value="Querétaro">Querétaro</option>
+                        <option value="Quintana Roo">Quintana Roo</option>
+                        <option value="San Luis Potosí">San Luis Potosí</option>
+                        <option value="Sinaloa">Sinaloa</option>
+                        <option value="Sonora">Sonora</option>
+                        <option value="Tabasco">Tabasco</option>
+                        <option value="Tamaulipas">Tamaulipas</option>
+                        <option value="Tlaxcala">Tlaxcala</option>
+                        <option value="Veracruz de Ignacio de la Llave">Veracruz de Ignacio de la Llave</option>
+                        <option value="Yucatán">Yucatán</option>
+                        <option value="Zacatecas">Zacatecas</option>
+                    </select>
+                </div>
+
+                <div class="md:col-span-2">
+                    <label for="curriculumVitae" class="block text-gray-700 text-sm font-bold mb-2">Adjuntar Curriculum Vitae (PDF, DOCX):</label>
+                    <input type="file" id="curriculumVitae" name="curriculumVitae" accept=".pdf,.doc,.docx" class="form-input p-2">
+                </div>
+
+                <div class="md:col-span-2">
+                    <label for="comentarios" class="block text-gray-700 text-sm font-bold mb-2">Comentarios:</label>
+                    <textarea id="comentarios" name="comentarios" class="form-textarea h-24" placeholder="Algún comentario adicional..."></textarea>
+                </div>
+
+                <div class="md:col-span-2 flex flex-col sm:flex-row justify-center gap-4 mt-6">
+                    <button type="submit" class="btn-primary py-3 px-8 rounded-lg font-bold text-lg shadow-md hover:shadow-lg transition-all duration-300">
+                        <i class="fas fa-user-plus mr-2"></i> Generar Inscripción
+                    </button>
+                    <button type="button" id="exportPdfBtn" class="bg-gray-700 text-white py-3 px-8 rounded-lg font-bold text-lg shadow-md hover:bg-gray-800 transition-all duration-300">
+                        <i class="fas fa-file-pdf mr-2"></i> Exportar Recibo (PDF)
+                    </button>
+                </div>
+            </form>
+        </section>
+    </main>
+
+    <div id="successMessage" class="success-message">
+        ¡Te has inscrito correctamente!
+    </div>
+
+    <footer class="bg-gray-800 text-white py-8 mt-10 shadow-inner">
+        <div class="container mx-auto flex flex-col md:flex-row items-center justify-between px-4">
+            <p class="text-center md:text-left mb-4 md:mb-0">&copy; 2025 Organización SILACORP. Todos los derechos reservados.</p>
+            <div class="flex space-x-6 text-2xl">
+                <a href="#" class="hover:text-blue-500 transition-colors" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+                <a href="#" class="hover:text-pink-500 transition-colors" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                <a href="#" class="hover:text-gray-400 transition-colors" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+                <a href="#" class="hover:text-blue-700 transition-colors" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                <a href="https://wa.me/XXXXXXXXXX" target="_blank" class="hover:text-green-500 transition-colors" aria-label="WhatsApp">
+                    <i class="fab fa-whatsapp"></i>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Función para limpiar el formulario
+        function clearForm() {
+            document.getElementById('registrationForm').reset();
+        }
+
+        // Función para mostrar el mensaje de éxito
+        function showSuccessMessage() {
+            const messageDiv = document.getElementById('successMessage');
+            messageDiv.style.display = 'block';
+            setTimeout(() => {
+                messageDiv.style.display = 'none';
+            }, 3000); // Ocultar después de 3 segundos
+        }
+
+        // Event Listener para el envío del formulario
+        document.getElementById('registrationForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevenir el envío por defecto del formulario
+            showSuccessMessage();
+            clearForm();
+        });
+
+        // Event Listener para el botón de Exportar Recibo (PDF)
+        document.getElementById('exportPdfBtn').addEventListener('click', function() {
+            // Obtener los valores del formulario
+            const nombre = document.getElementById('nombre').value;
+            const fechaNacimiento = document.getElementById('fechaNacimiento').value;
+            const curso = document.getElementById('curso').value;
+            const modalidad = document.getElementById('modalidad').value;
+            const telefono = document.getElementById('telefono').value;
+            const email = document.getElementById('email').value;
+            const ciudad = document.getElementById('ciudad').value;
+            const estado = document.getElementById('estado').value;
+            // No se puede obtener el archivo directamente para el PDF por razones de seguridad del navegador
+            // const curriculumVitae = document.getElementById('curriculumVitae').files[0];
+            const comentarios = document.getElementById('comentarios').value;
+
+            // Verificar que los campos requeridos no estén vacíos antes de generar el PDF
+            if (!nombre || !fechaNacimiento || !curso || !modalidad || !telefono || !email || !ciudad || !estado) {
+                alert('Por favor, completa todos los campos requeridos antes de generar el recibo.');
+                return;
+            }
+
+            // Crear un nuevo documento jsPDF
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+
+            // Configuración del documento
+            doc.setFont('helvetica');
+            doc.setFontSize(22);
+            doc.setTextColor(220, 38, 38); // Rojo SILACORP
+
+            doc.text('Recibo de Inscripción - SILACORP', 20, 20);
+
+            doc.setFontSize(12);
+            doc.setTextColor(51, 51, 51); // Gris oscuro
+
+            let yOffset = 40;
+            const lineHeight = 10;
+
+            doc.text(`Nombre: ${nombre}`, 20, yOffset);
+            yOffset += lineHeight;
+            doc.text(`Fecha de Nacimiento: ${fechaNacimiento}`, 20, yOffset);
+            yOffset += lineHeight;
+            doc.text(`Curso Inscrito: ${curso}`, 20, yOffset);
+            yOffset += lineHeight;
+            doc.text(`Modalidad: ${modalidad}`, 20, yOffset);
+            yOffset += lineHeight;
+            doc.text(`Teléfono: ${telefono}`, 20, yOffset);
+            yOffset += lineHeight;
+            doc.text(`E-mail: ${email}`, 20, yOffset);
+            yOffset += lineHeight;
+            doc.text(`Ciudad: ${ciudad}`, 20, yOffset);
+            yOffset += lineHeight;
+            doc.text(`Estado: ${estado}`, 20, yOffset);
+            yOffset += lineHeight;
+            // No se puede incluir el contenido del archivo CV directamente en el PDF del recibo
+            // Solo se puede indicar si se adjuntó o no, pero no el archivo en sí.
+            const cvFile = document.getElementById('curriculumVitae').files[0];
+            if (cvFile) {
+                doc.text(`Curriculum Vitae: Adjuntado (${cvFile.name})`, 20, yOffset);
+                yOffset += lineHeight;
+            } else {
+                doc.text(`Curriculum Vitae: No adjuntado`, 20, yOffset);
+                yOffset += lineHeight;
+            }
+
+            if (comentarios) {
+                doc.text(`Comentarios: ${comentarios}`, 20, yOffset);
+                yOffset += lineHeight;
+            }
+
+            // Guardar el PDF
+            doc.save(`Recibo_Inscripcion_${nombre.replace(/\s/g, '_')}.pdf`);
+        });
+    </script>
+</body>
+</html>
